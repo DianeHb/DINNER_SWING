@@ -8,4 +8,6 @@ class User < ApplicationRecord
   has_many :sub_events, foreign_key: :cooker_id, dependent: :destroy
   has_many :user_diets
   has_many :user_hobbies
+
+  has_one_attached :avatar
 end

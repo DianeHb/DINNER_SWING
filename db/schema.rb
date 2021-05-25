@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_142508) do
+ActiveRecord::Schema.define(version: 2021_05_25_144051) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_142508) do
   create_table "sub_events", force: :cascade do |t|
     t.string "name"
     t.time "hour"
-    t.bigint "cooker_id", null: false
+    t.bigint "cooker_id"
     t.bigint "event_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

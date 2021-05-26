@@ -146,17 +146,17 @@ p "Seeds for Cities"
 
 nantes = City.create!(
   name: "Nantes",
-  photo: "images/nantescity.png"
+  photo: "nantescity.png"
 )
 
 paris = City.create!(
   name: "Paris",
-  photo: "images/paris.png"
+  photo: "paris.png"
 )
 
 lr = City.create!(
   name: "La Rochelle",
-  photo: "images/larochelle.png"
+  photo: "larochelle.png"
 )
 
 p "Seeds for Cities done!"

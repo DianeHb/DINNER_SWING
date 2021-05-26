@@ -1,0 +1,16 @@
+.cities {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 16px;
+}
+
+.city {
+  text-align: center;
+  img {
+    width: 200px;
+  }
+}

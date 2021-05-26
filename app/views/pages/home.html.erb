@@ -1,3 +1,17 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
-<%= t('hello') %>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('<%= image_path "diner.jpg" %>');">
+  <div class="container">
+    <h1><%= t('title') %></h1>
+    <p><%= t('subtitle') %></p>
+    <a class="btn btn-primary" href="#"><%= t('action') %></a>
+  </div>
+</div>
+
+<h2 class="presentation"><%= t('presentation') %></h2>
+<div class="cities">
+  <% @cities.first(3).each do |city| %>
+    <div class="city">
+      <h3><%=city.name%></h3>
+      <%= image_tag (city.photo) %>
+    </div>
+  <% end %>
+</div>

@@ -6,8 +6,8 @@ class User < ApplicationRecord
 
   has_many :participants
   has_many :sub_events, foreign_key: :cooker_id, dependent: :destroy
-  has_many :user_diets
-  has_many :user_hobbies
+  has_many :user_diets, dependent: :destroy
+  has_many :user_hobbies, dependent: :destroy
 
   has_one_attached :avatar
 end

@@ -6,6 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+User.destroy_all
+Hobby.destroy_all
+Diet.destroy_all
+UserDiet.destroy_all
+UserHobby.destroy_all
+City.destroy_all
+Event.destroy_all
+SubEvent.destroy_all
 
 #******USERS********
 
@@ -14,29 +22,46 @@ p "Seeds for Users"
 caroline = User.create!(
   first_name: "Caroline",
   last_name: "Des Jamonières",
-  avatar_url: "https://kitt.lewagon.com/placeholder/users/clycrs",
   email: 'caroline@gmail.com',
   password: 'Secret123!',
   address: "8 rue d'Angoumois 44000 Nantes"
 )
 
+caroline_file = File.open(Rails.root.join("db/fixtures/clycrs.jpg"))
+caroline.avatar.attach(io: caroline_file, filename: 'clycrs.jpg', content_type: 'image/jpg')
+
 diane = User.create!(
   first_name: "Diane",
   last_name: "Hubau",
-  avatar_url: "https://kitt.lewagon.com/placeholder/users/dianehb",
   email: 'diane@gmail.com',
   password: 'Secret123!',
   address: "11b avenue du haut Rillon 17340 Châtelaillon-Plage"
 )
 
+diane_file = File.open(Rails.root.join("db/fixtures/dianehb.jpg"))
+diane.avatar.attach(io: diane_file, filename: 'dianehb.jpg', content_type: 'image/jpg')
+
 roch = User.create!(
   first_name: "Roch",
   last_name: "Des Jamonières",
-  avatar_url: "https://kitt.lewagon.com/placeholder/users/clycrs",
   email: 'roch@gmail.com',
   password: 'Secret123!',
   address: "11 rue Felibien 44000 Nantes"
 )
+
+roch_file = File.open(Rails.root.join("db/fixtures/roch.JPG"))
+roch.avatar.attach(io: roch_file, filename: 'roch.JPG', content_type: 'image/jpg')
+
+unknown = User.create!(
+  first_name: "Unknown",
+  last_name: "Unknown",
+  email: 'unknown@gmail.com',
+  password: 'Secret123!',
+  address: "11 rue Felibien 44000 Nantes"
+)
+
+unknown_file = File.open(Rails.root.join("db/fixtures/unknown.jpg"))
+unknown.avatar.attach(io: unknown_file, filename: 'unknown.jpg', content_type: 'image/jpg')
 
 p "Seeds for Users done!"
 
@@ -45,26 +70,20 @@ p "Seeds for Users done!"
 p "Seeds Hobbies"
 
 travel = Hobby.create!(
-  name: travel
+  name: travel,
+  picto: '<i class="fas fa-plane-departure"></i>',
 )
-
-file_travel = File.open(Rails.root.join("db/fixtures/nantescity.png"))
-travel.photo.attach(io: file_travel, filename: 'paris.png', content_type: 'image/png')
 
 cooking = Hobby.create!(
-  name: cooking
+  name: cooking,
+  picto: '<i class="fas fa-cookie-bite"></i>'
 )
 
-file_cooking = File.open(Rails.root.join("db/fixtures/nantescity.png"))
-cooking.photo.attach(io: file_cooking, filename: 'paris.png', content_type: 'image/png')
 
 music = Hobby.create!(
-  name: music
+  name: music,
+  picto: '<i class="fas fa-music"></i>',
 )
-
-file_music = File.open(Rails.root.join("db/fixtures/nantescity.png"))
-music.photo.attach(io: file_music, filename: 'paris.png', content_type: 'image/png')
-
 
 UserHobby.create!(
   user: caroline,
@@ -88,25 +107,20 @@ p "Seeds Hobbies done"
 p "Seeds Diets"
 
 vegan = Diet.create!(
-  name: vegan
+  name: vegan,
+  picto: '<i class="fas fa-leaf"></i>'
 )
-
-file_vegan = File.open(Rails.root.join("db/fixtures/nantescity.png"))
-vegan.photo.attach(io: file_vegan, filename: 'paris.png', content_type: 'image/png')
 
 gluten_free = Diet.create!(
-  name: gluten_free
+  name: gluten_free,
+  picto: '<i class="fab fa-pagelines"></i>'
 )
-
-file_gluten_free = File.open(Rails.root.join("db/fixtures/nantescity.png"))
-gluten_free.photo.attach(io: file_gluten_free, filename: 'paris.png', content_type: 'image/png')
 
 vegetarian = Diet.create!(
-  name: vegetarian
+  name: vegetarian,
+  picto: '<i class="fas fa-carrot"></i>'
 )
 
-file_vegetarian = File.open(Rails.root.join("db/fixtures/nantescity.png"))
-vegetarian.photo.attach(io: file_vegetarian, filename: 'paris.png', content_type: 'image/png')
 
 UserDiet.create!(
   user: caroline,
@@ -123,37 +137,27 @@ UserDiet.create!(
   diet: vegetarian
 )
 
-
 p "Seeds Diets done"
 
 #**********************CITIES*******************
 
 p "Seeds for Cities"
 
-file_nantes = File.open(Rails.root.join("db/fixtures/nantescity.png"))
 
 nantes = City.create!(
-  name: "Nantes"
+  name: "Nantes",
+  photo: "images/nantescity.png"
 )
-
-nantes.photo.attach(io: file_nantes, filename: 'nantescity.png', content_type: 'image/png')
-
-file_paris = File.open(Rails.root.join("db/fixtures/paris.png"))
 
 paris = City.create!(
-  name: "Paris"
+  name: "Paris",
+  photo: "images/paris.png"
 )
-
-paris.photo.attach(io: file_paris, filename: 'paris.png', content_type: 'image/png')
-
-file_lr = File.open(Rails.root.join("db/fixtures/larochelle.png"))
 
 lr = City.create!(
-  name: "La Rochelle"
+  name: "La Rochelle",
+  photo: "images/larochelle.png"
 )
-
-lr.photo.attach(io: file_lr, filename: 'larochelle.png', content_type: 'image/png')
-
 
 p "Seeds for Cities done!"
 
@@ -162,200 +166,216 @@ p "Seeds for Cities done!"
 p "Seeds for Events"
 
 e1 = Event.create!(
-  date: Date.today + 6,
-  theme: "Chic&Choc"
+  date: Date.new(2021,6,10),
+  theme: "Chic&Choc",
   city: nantes
 )
 
-e1_file = File.open(Rails.root.join("db/fixtures/lhermione.jpg"))
-e1.photo.attach(io: e1_file, filename: 'lhermione.jpg', content_type: 'image/jpg')
+e1_file = File.open(Rails.root.join("db/fixtures/C&C.png"))
+e1.photo.attach(io: e1_file, filename: 'C&C.png', content_type: 'image/png')
 
 SubEvent.create!(
   event: e1,
   name: "Apéro",
-  hour: Time.now,
+  hour: Time.new(2021,6,10,19,30),
   cooker: caroline
 )
 
 SubEvent.create!(
   event: e1,
   name: "Plat",
-  hour: Time.now,
+  hour: Time.new(2021,6,10,21,00),
   cooker: diane
 )
 
 SubEvent.create!(
   event: e1,
   name: "Dessert",
-  hour: Time.now
+  hour: Time.new(2021,6,10,22,30),
   cooker: roch
 )
 
 e2 = Event.create!(
-  date: Date.today + 40
-  theme: "Cow-Boys"
+  date: Date.new(2021,9,10),
+  theme: "Cow-Boys",
   city: nantes
 )
 
-e2_file = File.open(Rails.root.join("db/fixtures/lhermione.jpg"))
-e2.photo.attach(io: e2_file, filename: 'lhermione.jpg', content_type: 'image/jpg')
+e2_file = File.open(Rails.root.join("db/fixtures/cow-boys.jpg"))
+e2.photo.attach(io: e2_file, filename: 'cow-boys.jpg', content_type: 'image/jpg')
 
 SubEvent.create!(
   event: e2,
   name: "Entrée",
-  hour: Time.now
+  hour: Time.new(2021,9,10,19,30),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e2,
   name: "Plat",
-  hour: Time.now
+  hour: Time.new(2021,9,10,21,00),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e2,
   name: "Dessert",
-  hour: Time.now
+  hour: Time.new(2021,9,10,22,30),
+  cooker: unknown
 )
 
 e3 = Event.create!(
-  date: Date.today + 60
-  theme: "Entre terre & mer"
+  date: Date.new(2021,12,10),
+  theme: "Entre terre & mer",
   city: nantes
 
 )
 
-e3_file = File.open(Rails.root.join("db/fixtures/lhermione.jpg"))
-e3.photo.attach(io: e3_file, filename: 'lhermione.jpg', content_type: 'image/jpg')
+e3_file = File.open(Rails.root.join("db/fixtures/tampon-terre-et-mer.jpg"))
+e3.photo.attach(io: e3_file, filename: 'tampon-terre-et-mer.jpg', content_type: 'image/jpg')
 
 SubEvent.create!(
   event: e3,
   name: "Apéro",
-  hour: Time.now
+  hour: Time.new(2021,12,10,19,30),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e3,
   name: "Plat",
-  hour: Time.now
+  hour: Time.new(2021,12,10,21,00),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e3,
   name: "Dessert",
-  hour: Time.now
+  hour: Time.new(2021,12,10,22,30),
+  cooker: unknown
 )
 
 e4 = Event.create!(
-  date: Date.today + 4
-  theme: "Antillais"
+  date: Date.new(2021,6,20),
+  theme: "Antillais",
   city: paris
 
 )
 
-e4_file = File.open(Rails.root.join("db/fixtures/lhermione.jpg"))
-e4.photo.attach(io: e4_file, filename: 'lhermione.jpg', content_type: 'image/jpg')
+e4_file = File.open(Rails.root.join("db/fixtures/cuisine-antillaise.jpg"))
+e4.photo.attach(io: e4_file, filename: 'cuisine-antillaise.jpg', content_type: 'image/jpg')
 
 SubEvent.create!(
   event: e4,
   name: "Entrée",
-  hour: Time.now
+  hour: Time.new(2021,6,20,19,30),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e4,
   name: "Plat",
-  hour: Time.now
+  hour: Time.new(2021,6,20,21,00),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e4,
   name: "Dessert",
-  hour: Time.now
+  hour: Time.new(2021,6,20,22,30),
+  cooker: unknown
 )
 
 e5 = Event.create!(
-  date: Date.today + 36
-  theme: "Avengers"
+  date: Date.new(2021,9,20),
+  theme: "Avengers",
   city: paris
 
 )
 
-e5_file = File.open(Rails.root.join("db/fixtures/lhermione.jpg"))
-e5.photo.attach(io: e5_file, filename: 'lhermione.jpg', content_type: 'image/jpg')
+e5_file = File.open(Rails.root.join("db/fixtures/avengers.jpg"))
+e5.photo.attach(io: e5_file, filename: 'avengers.jpg', content_type: 'image/jpg')
 
 SubEvent.create!(
   event: e5,
   name: "Apéro",
-  hour: Time.now
+  hour: Time.new(2021,9,20,19,30),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e5,
   name: "Plat",
-  hour: Time.now
+  hour: Time.new(2021,9,20,21,00),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e5,
   name: "Dessert",
-  hour: Time.now
+  hour: Time.new(2021,9,20,22,30),
+  cooker: unknown
 )
 
 e6 = Event.create!(
-  date: Date.today + 12
-  theme: "Bed&Boats"
+  date: Date.new(2021,7,10),
+  theme: "Bed&Boats",
   city: lr
-
 )
 
-e6_file = File.open(Rails.root.join("db/fixtures/lhermione.jpg"))
-e6.photo.attach(io: e6_file, filename: 'lhermione.jpg', content_type: 'image/jpg')
+e6_file = File.open(Rails.root.join("db/fixtures/bed&boat.png"))
+e6.photo.attach(io: e6_file, filename: 'bed&boat.png', content_type: 'image/png')
 
 SubEvent.create!(
   event: e6,
   name: "Entrée",
-  hour: Time.now
+  hour: Time.new(2021,7,10,19,30),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e6,
   name: "Plat",
-  hour: Time.now
+  hour: Time.new(2021,7,10,21,00),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e6,
   name: "Dessert",
-  hour: Time.now
+  hour: Time.new(2021,7,10,22,30),
+  cooker: unknown
 )
 
 e7 = Event.create!(
-  date: Date.today + 50
-  theme: "US"
+  date: Date.new(2021,10,10),
+  theme: "US",
   city: lr
-
 )
 
-e7_file = File.open(Rails.root.join("db/fixtures/lhermione.jpg"))
-e7.photo.attach(io: e7_file, filename: 'lhermione.jpg', content_type: 'image/jpg')
+e7_file = File.open(Rails.root.join("db/fixtures/USA.jpg"))
+e7.photo.attach(io: e7_file, filename: 'USA.jpg', content_type: 'image/jpg')
 
 SubEvent.create!(
   event: e7,
   name: "Apéro",
-  hour: Time.now
+  hour: Time.new(2021,10,10,19,30),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e7,
   name: "Plat",
-  hour: Time.now
+  hour: Time.new(2021,10,10,21,00),
+  cooker: unknown
 )
 
 SubEvent.create!(
   event: e7,
   name: "Dessert",
-  hour: Time.now
+  hour: Time.new(2021,10,10,22,30),
+  cooker: unknown
 )
 
 p "Seeds for Events done!"
